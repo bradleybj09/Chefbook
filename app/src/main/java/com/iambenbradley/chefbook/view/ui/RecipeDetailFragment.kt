@@ -33,4 +33,6 @@ class RecipeDetailFragment : Fragment() {
         })
         return binding.root
     }
+
+
 }
