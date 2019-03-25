@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="viewModel"
+                type="com.iambenbradley.chefbook.viewmodel.RecipeDetailViewModel"/>
+
+        <variable
+                name="recipe"
+                type="com.iambenbradley.chefbook.model.RecipeFull"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar_layout"
+                app:elevation="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:navigationIcon="@drawable/ic_app_icon_32"
+                    style="@style/Theme.Chefbook.Toolbar"
+                    app:title="@string/app_name"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+                android:id="@+id/grid_front_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="1"
+                android:elevation="2dp"
+                android:background="@drawable/front_sheet_shape"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <ImageView
+                        android:id="@+id/detail_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@{recipe.recipe.title}"
+                        app:shortImageUrl="@{recipe.recipe.image}"/>
+
+                <TextView
+                        android:id="@+id/detail_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_image"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{recipe.recipe.title}"/>
+
+                <TextView
+                        android:id="@+id/detail_prep_time_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/prep_time"/>
+
+                <TextView
+                        android:id="@+id/detail_prep_time"
+                        app:layout_constraintLeft_toRightOf="@id/detail_prep_time_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{recipe.recipe.readyInMinutes}"/>
+
+                <TextView
+                        android:id="@+id/detail_prep_time_minutes"
+                        app:layout_constraintLeft_toRightOf="@id/detail_prep_time"
+                        app:layout_constraintTop_toBottomOf="@id/detail_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/minutes"/>
+
+                <TextView
+                        android:id="@+id/detail_servings_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_prep_time_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/serves"/>
+
+                <TextView
+                        android:id="@+id/detail_servings"
+                        app:layout_constraintTop_toBottomOf="@id/detail_prep_time"
+                        app:layout_constraintLeft_toRightOf="@id/detail_servings_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{recipe.recipe.servings}"/>
+
+                <TextView
+                        android:id="@+id/detail_instructions"
+                        app:layout_constraintTop_toBottomOf="@id/detail_servings_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{recipe.recipe.instructions}"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+                android:id="@+id/action_sheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:elevation="16dp"
+                android:padding="12dp"
+                android:background="@drawable/action_sheet_shape"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+            <ImageView
+                    android:contentDescription="@string/favorites"
+                    android:clickable="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_heart_empty"/>
+
+            <ImageView
+                    android:contentDescription="@string/search"
+                    android:clickable="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_search"/>
+
+            <ImageView
+                    android:contentDescription="@string/shopping_list"
+                    android:clickable="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_cart"/>
+
+            <ToggleButton
+                    android:contentDescription="@string/expand"
+                    android:background="@drawable/ic_expand_toggle"
+                    android:checked="@={viewModel.expanded}"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

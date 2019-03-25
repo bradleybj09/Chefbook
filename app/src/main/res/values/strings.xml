@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Chefbook</string>
+    <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
+    <string name="shopping_list">Shopping List</string>
+    <string name="expand">More/Less</string>
+    <string name="serves">Serves </string>
+    <string name="prep_time">Prep Time: </string>
+    <string name="minutes"> minutes</string>
+    <string name="find_recipes">Find Recipes</string>
+    <string name="cancel">Cancel</string>
+</resources>

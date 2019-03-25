@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav"
+        app:startDestination="@id/recipe_grid_fragment">
+
+    <fragment
+        android:id="@+id/recipe_grid_fragment"
+        android:name="com.iambenbradley.chefbook.view.ui.RecipeGridFragment"
+        tools:layout="@layout/fragment_recipe_grid">
+
+        <action
+            android:id="@+id/action_recipe_grid_to_recipe_detail"
+            app:destination="@+id/recipe_detail_fragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_detail_fragment"
+        android:name="com.iambenbradley.chefbook.view.ui.RecipeDetailFragment"
+        tools:layout="@layout/fragment_recipe_detail">
+
+        <argument
+            android:name="recipeId"
+            app:argType="long"/>
+
+    </fragment>
+
+
+</navigation>
