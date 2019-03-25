@@ -50,26 +50,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                <TextView
+                        android:id="@+id/detail_title"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="@{recipe.recipe.title}"/>
+
                 <ImageView
                         android:id="@+id/detail_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detail_title"
                         android:scaleType="centerCrop"
                         android:contentDescription="@{recipe.recipe.title}"
-                        app:shortImageUrl="@{recipe.recipe.image}"/>
-
-                <TextView
-                        android:id="@+id/detail_title"
-                        app:layout_constraintTop_toBottomOf="@id/detail_image"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{recipe.recipe.title}"/>
+                        app:fullImageUrl="@{recipe.recipe.image}"/>
 
                 <TextView
                         android:id="@+id/detail_prep_time_title"
-                        app:layout_constraintTop_toBottomOf="@id/detail_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_image"
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -78,15 +78,15 @@
                 <TextView
                         android:id="@+id/detail_prep_time"
                         app:layout_constraintLeft_toRightOf="@id/detail_prep_time_title"
-                        app:layout_constraintTop_toBottomOf="@id/detail_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{recipe.recipe.readyInMinutes}"/>
+                        android:text="@{String.valueOf(recipe.recipe.readyInMinutes)}"/>
 
                 <TextView
                         android:id="@+id/detail_prep_time_minutes"
                         app:layout_constraintLeft_toRightOf="@id/detail_prep_time"
-                        app:layout_constraintTop_toBottomOf="@id/detail_title"
+                        app:layout_constraintTop_toBottomOf="@id/detail_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/minutes"/>
@@ -105,7 +105,7 @@
                         app:layout_constraintLeft_toRightOf="@id/detail_servings_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{recipe.recipe.servings}"/>
+                        android:text="@{String.valueOf(recipe.recipe.servings)}"/>
 
                 <TextView
                         android:id="@+id/detail_instructions"

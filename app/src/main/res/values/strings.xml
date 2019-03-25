@@ -4,9 +4,9 @@
     <string name="search">Search</string>
     <string name="shopping_list">Shopping List</string>
     <string name="expand">More/Less</string>
-    <string name="serves">Serves </string>
-    <string name="prep_time">Prep Time: </string>
-    <string name="minutes"> minutes</string>
+    <string name="serves">Serves \u0020</string>
+    <string name="prep_time">Prep Time: \u0020</string>
+    <string name="minutes">\u0020 minutes</string>
     <string name="find_recipes">Find Recipes</string>
     <string name="cancel">Cancel</string>
 </resources>

@@ -41,6 +41,6 @@ class RecipeDetailViewModel @Inject constructor(private val repository: RecipeRe
         repository.getRecipeDetails(recipeId)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            .subscribe(disposableObserver)
     }
 }

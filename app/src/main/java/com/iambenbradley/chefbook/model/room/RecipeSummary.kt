@@ -7,6 +7,7 @@ data class RecipeSummary(
     val id: Long,
     val title: String,
     val readyInMinutes: Int,
+    val servings: Int,
     val image: String,
     val imageUrls: List<String>
 )

@@ -14,8 +14,8 @@ const val IMAGE_ROOT_PATH = "https://spoonacular.com/recipeImages/"
 
 
 @BindingAdapter("app:fullImageUrl")
-fun loadImage(view: ImageView, fullImageUrl: String) {
-    Picasso.get().load(fullImageUrl).into(view)
+fun loadImage(view: ImageView, fullImageUrl: String?) {
+    if(fullImageUrl != null) Picasso.get().load(fullImageUrl).into(view)
 }
 
 @BindingAdapter("app:shortImageUrl")
@@ -27,7 +27,7 @@ fun loadImage2(view: ImageView, shortImageUrl: String) {
 fun convertRecipeToSummary(input: List<Recipe>): List<RecipeSummary> {
     val list: MutableList<RecipeSummary> = ArrayList()
     for (recipe in input) {
-        list.add(RecipeSummary(recipe.id, recipe.title, recipe.readyInMinutes, recipe.image, listOf()))
+        list.add(RecipeSummary(recipe.id, recipe.title, recipe.readyInMinutes, recipe.servings, recipe.image, listOf()))
     }
     return list
 }

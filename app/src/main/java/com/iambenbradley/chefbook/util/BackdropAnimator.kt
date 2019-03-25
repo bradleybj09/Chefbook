@@ -6,12 +6,12 @@ import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
-class BackdropAnimatorListener(private val frontSheet: View, private val expandedView: View) : View.OnClickListener {
+class BackdropAnimator(private val frontSheet: View, private val expandedView: View) {
 
     private val animatorSet = AnimatorSet()
-    var backdropShown = false
+    private var backdropShown = true
 
-    override fun onClick(v: View?) {
+    fun animate() {
         backdropShown = !backdropShown
         animatorSet.removeAllListeners()
         animatorSet.end()
@@ -27,4 +27,5 @@ class BackdropAnimatorListener(private val frontSheet: View, private val expande
             imm.hideSoftInputFromWindow(expandedView.windowToken, 0)
         }
     }
+
 }
