@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iambenbradley.chefbook.model.RecipeRepository
+import com.iambenbradley.chefbook.model.room.Recipe
 import com.iambenbradley.chefbook.model.room.RecipeSummary
 import com.iambenbradley.chefbook.retrofit.ResponseRecipeSearch
+import com.iambenbradley.chefbook.util.convertRecipeListToSummaryList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -17,7 +19,9 @@ class RecipeGridViewModel @Inject constructor(private val repository: RecipeRepo
     var searchButtonEnabled = MutableLiveData<Boolean>()
     var recipes = MutableLiveData<List<RecipeSummary>>()
     var searchQuery = ""
-    lateinit var disposableObserver: DisposableObserver<ResponseRecipeSearch>
+    lateinit var disposableSearchObserver: DisposableObserver<ResponseRecipeSearch>
+    lateinit var disposableFavoritesObserver: DisposableObserver<List<Recipe>>
+    var showingFavorites = MutableLiveData<Boolean>()
 
     fun recipesResult(): LiveData<List<RecipeSummary>> {
         return recipes
@@ -25,28 +29,40 @@ class RecipeGridViewModel @Inject constructor(private val repository: RecipeRepo
 
     init {
         searchButtonEnabled.value = false
+        showingFavorites.value = true
+        getFavoriteRecipes()
     }
 
     fun findRecipes() {
-        disposableObserver = object : DisposableObserver<ResponseRecipeSearch>() {
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
+        disposableSearchObserver = object : DisposableObserver<ResponseRecipeSearch>() {
+            override fun onComplete() {}
+            override fun onError(e: Throwable) {}
             override fun onNext(t: ResponseRecipeSearch) {
                 for (recipe in t.recipes) {
                 }
                 recipes.postValue(t.recipes)
+                showingFavorites.value = false
             }
         }
 
         repository.getRecipes(searchQuery)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(disposableObserver)
+            .subscribe(disposableSearchObserver)
+    }
+
+    fun getFavoriteRecipes() {
+        disposableFavoritesObserver = object : DisposableObserver<List<Recipe>>() {
+            override fun onComplete() {}
+            override fun onError(e: Throwable) {}
+            override fun onNext(t: List<Recipe>) {
+                recipes.postValue(convertRecipeListToSummaryList(t))
+                showingFavorites.value = true
+            }
+        }
+        repository.getFavoriteRecipes()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(disposableFavoritesObserver)
     }
 }

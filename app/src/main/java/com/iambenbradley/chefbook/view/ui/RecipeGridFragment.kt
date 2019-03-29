@@ -41,13 +41,19 @@ class RecipeGridFragment : Fragment() {
         }
         viewModel.recipesResult().observe(this, Observer<List<RecipeSummary>> {
             adapter.replaceData(it)
+            if (adapter.itemCount == 0) {
+                binding.emptyView.visibility = View.VISIBLE
+            } else {
+                binding.emptyView.visibility = View.GONE
+            }
         })
-        val listener = BackdropAnimatorListener(binding.gridFrontSheet, binding.gridBackdrop)
+        val listener = BackdropAnimatorListener(binding.gridFrontSheet, binding.gridBackdrop, binding.frontSheetScrim)
         binding.detailSearchButton.setOnClickListener(listener)
         binding.searchCancelButton.setOnClickListener(listener)
+        binding.frontSheetScrim.setOnClickListener(listener)
         binding.searchFindButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val animator = BackdropAnimator(binding.gridFrontSheet, binding.gridBackdrop)
+                val animator = BackdropAnimator(binding.gridFrontSheet, binding.gridBackdrop, binding.frontSheetScrim)
                 animator.animate()
                 listener.backdropShown = !listener.backdropShown
                 viewModel.findRecipes()

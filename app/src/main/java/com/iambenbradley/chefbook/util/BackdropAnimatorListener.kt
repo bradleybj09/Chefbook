@@ -5,22 +5,34 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.animation.doOnEnd
 
-class BackdropAnimatorListener(private val frontSheet: View, private val expandedView: View) : View.OnClickListener {
+class BackdropAnimatorListener(private val frontSheet: View, private val expandedView: View, private val scrim: View) : View.OnClickListener {
 
     private val animatorSet = AnimatorSet()
     var backdropShown = false
 
     override fun onClick(v: View?) {
         backdropShown = !backdropShown
+        if (!backdropShown) {
+            scrim.visibility = View.GONE
+        }
         animatorSet.removeAllListeners()
         animatorSet.end()
         animatorSet.cancel()
 
         val animator = ObjectAnimator.ofFloat(frontSheet, "translationY", (if (backdropShown) expandedView.height else 0).toFloat())
+        val scrimAnimator = ObjectAnimator.ofFloat(scrim, "translationY", (if (backdropShown) expandedView.height else 0).toFloat())
         animator.duration = 500
-        animatorSet.play(animator)
+        animatorSet.playTogether(animator, scrimAnimator)
         animator.start()
+        scrimAnimator.start()
+
+        scrimAnimator.doOnEnd {
+            if (backdropShown) {
+                scrim.visibility = View.VISIBLE
+            }
+        }
 
         if (!backdropShown) {
             val imm = expandedView.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

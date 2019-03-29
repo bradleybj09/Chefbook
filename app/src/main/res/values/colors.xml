@@ -6,4 +6,5 @@
     <color name="colorSecondaryDark">#40241a</color>
     <color name="colorAccent">#40241a</color>
     <color name="frontSheetBackground">#fffffa</color>
+    <color name="frontSheetScrim">#ccffffff</color>
 </resources>

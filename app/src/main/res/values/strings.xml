@@ -9,4 +9,6 @@
     <string name="minutes">\u0020 minutes</string>
     <string name="find_recipes">Find Recipes</string>
     <string name="cancel">Cancel</string>
+    <string name="no_favorites">You have no favorite recipes. Try searching for something!</string>
+    <string name="no_results">Your search returned no results. Try something else!</string>
 </resources>

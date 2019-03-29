@@ -24,7 +24,7 @@ fun loadImage2(view: ImageView, shortImageUrl: String) {
 }
 
 
-fun convertRecipeToSummary(input: List<Recipe>): List<RecipeSummary> {
+fun convertRecipeListToSummaryList(input: List<Recipe>): List<RecipeSummary> {
     val list: MutableList<RecipeSummary> = ArrayList()
     for (recipe in input) {
         list.add(RecipeSummary(recipe.id, recipe.title, recipe.readyInMinutes, recipe.servings, recipe.image, listOf()))
