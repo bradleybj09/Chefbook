@@ -10,24 +10,24 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     @Headers(
-        "X-RapidAPI-Key: XW0h7SK8OhmshEzMZ09IFHwlZK24p11vEfVjsnhwQh7VUixDxX",
+        "X-RapidAPI-Key: $API_KEY",
         "Accept: Application/Json"
     )
     @GET("recipes/search")
-    fun searchRecipes(@Query("query") query: String, @Query("number") number: String = "4"): Observable<ResponseRecipeSearch>
+    fun searchRecipes(@Query("query") query: String, @Query("number") number: String = "6"): Observable<ResponseRecipeSearch>
 
     @Headers(
-        "X-RapidAPI-Key: XW0h7SK8OhmshEzMZ09IFHwlZK24p11vEfVjsnhwQh7VUixDxX",
+        "X-RapidAPI-Key: $API_KEY",
         "Accept: Application/Json"
     )
     @GET("recipes/{recipeID}/information")
     fun getRecipeDetail(@Path("recipeID") recipeID: Long): Observable<ResponseRecipeDetail>
 
     @Headers(
-        "X-RapidAPI-Key: XW0h7SK8OhmshEzMZ09IFHwlZK24p11vEfVjsnhwQh7VUixDxX",
+        "X-RapidAPI-Key: $API_KEY",
         "Accept: Application/Json"
     )
     @GET("recipes/search")
-    fun searchRecipesCall(@Query("query") query: String, @Query("number") number: String = "4"): Call<ResponseRecipeSearch>
+    fun searchRecipesCall(@Query("query") query: String, @Query("number") number: String = "1"): Call<ResponseRecipeSearch>
 
 }

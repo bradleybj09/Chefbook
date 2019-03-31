@@ -1,10 +1,12 @@
 package com.iambenbradley.chefbook.view.ui
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -51,14 +53,25 @@ class RecipeGridFragment : Fragment() {
         binding.detailSearchButton.setOnClickListener(listener)
         binding.searchCancelButton.setOnClickListener(listener)
         binding.frontSheetScrim.setOnClickListener(listener)
-        binding.searchFindButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val animator = BackdropAnimator(binding.gridFrontSheet, binding.gridBackdrop, binding.frontSheetScrim)
-                animator.animate()
-                listener.backdropShown = !listener.backdropShown
-                viewModel.findRecipes()
+        binding.searchFindButton.setOnClickListener {
+            val animator = BackdropAnimator(binding.gridFrontSheet, binding.gridBackdrop, binding.frontSheetScrim)
+            animator.animate()
+            listener.backdropShown = !listener.backdropShown
+            viewModel.findRecipes()
+        }
+        binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    val animator = BackdropAnimator(binding.gridFrontSheet, binding.gridBackdrop, binding.frontSheetScrim)
+                    animator.animate()
+                    listener.backdropShown = !listener.backdropShown
+                    viewModel.findRecipes()
+                    return true
+                }
+                return false
             }
         })
+
         binding.searchEditText.addTextChangedListener(object : TextValidator(binding.searchEditText) {
             override fun validate(v: TextInputEditText, s: String) {
                 viewModel.searchButtonEnabled.value = s.isNotBlank()

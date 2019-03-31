@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso
 const val API_PATH = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
 const val IMAGE_ROOT_PATH = "https://spoonacular.com/recipeImages/"
 
-
 @BindingAdapter("app:fullImageUrl")
 fun loadImage(view: ImageView, fullImageUrl: String?) {
     if(fullImageUrl != null) Picasso.get().load(fullImageUrl).into(view)

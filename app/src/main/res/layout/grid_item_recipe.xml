@@ -9,9 +9,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:padding="4dp">
 
-        <ImageView
+        <com.iambenbradley.chefbook.view.ui.SquareImageView
                 android:id="@+id/grid_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
