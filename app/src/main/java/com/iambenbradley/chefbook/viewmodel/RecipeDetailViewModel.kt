@@ -1,30 +1,53 @@
 package com.iambenbradley.chefbook.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iambenbradley.chefbook.model.RecipeFull
 import com.iambenbradley.chefbook.model.RecipeRepository
+import com.iambenbradley.chefbook.model.room.Recipe
 import com.iambenbradley.chefbook.retrofit.ResponseRecipeDetail
 import com.iambenbradley.chefbook.util.convertResponseDetailToRecipe
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class RecipeDetailViewModel @Inject constructor(private val repository: RecipeRepository) : ViewModel() {
 
-    var expanded = false
     var recipe: MutableLiveData<RecipeFull> = MutableLiveData()
-    lateinit var disposableObserver: DisposableObserver<ResponseRecipeDetail>
+    lateinit var disposableDetailObserver: DisposableObserver<ResponseRecipeDetail>
+    var isFavorite = MutableLiveData<Boolean>()
 
     fun recipe(): LiveData<RecipeFull> {
         return recipe
     }
 
-    fun setup(recipeId: Long) {
+    fun toggleRecipeFavorite() {
+        if (isFavorite.value!!) {
+            repository.removeRecipeFavorite(recipe.value!!.recipe)
+        } else {
+            repository.addRecipeFavorite(recipe.value!!.recipe)
+        }
+        isFavorite.value = !(isFavorite.value as Boolean)
+    }
 
-        disposableObserver = object : DisposableObserver<ResponseRecipeDetail>() {
+    fun setup(recipeId: Long) {
+        repository.getIsFavoriteRecipe(recipeId)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :
+                SingleObserver<Int> {
+                override fun onError(e: Throwable) {}
+                override fun onSubscribe(d: Disposable) {}
+                override fun onSuccess(t: Int) {
+                    isFavorite.value = t == 1
+                }
+            })
+        disposableDetailObserver = object : DisposableObserver<ResponseRecipeDetail>() {
             override fun onComplete() {
 
             }
@@ -41,6 +64,6 @@ class RecipeDetailViewModel @Inject constructor(private val repository: RecipeRe
         repository.getRecipeDetails(recipeId)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(disposableObserver)
+            .subscribe(disposableDetailObserver)
     }
 }

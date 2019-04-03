@@ -7,7 +7,9 @@ import com.iambenbradley.chefbook.model.room.Recipe
 import com.iambenbradley.chefbook.retrofit.ApiInterface
 import com.iambenbradley.chefbook.retrofit.ResponseRecipeDetail
 import com.iambenbradley.chefbook.retrofit.ResponseRecipeSearch
-import io.reactivex.Observable
+import io.reactivex.*
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +23,30 @@ class RecipeRepository @Inject constructor(
     fun getFavoriteRecipes(): Observable<List<Recipe>> {
         return recipeDao.getFavoriteRecipes()
 
+    }
+
+    fun getIsFavoriteRecipe(recipeId: Long): Single<Int> {
+        return recipeDao.getIsRecipeFavorite(recipeId)
+    }
+
+    fun addRecipeFavorite(recipe: Recipe) {
+        Completable.fromAction{ recipeDao.addFavoriteRecipe(recipe) }
+            .subscribeOn(Schedulers.newThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {}
+                override fun onError(e: Throwable) {}
+                override fun onSubscribe(d: Disposable) {}
+            })
+    }
+
+    fun removeRecipeFavorite(recipe: Recipe) {
+        Completable.fromAction {recipeDao.deleteRecipe(recipe) }
+            .subscribeOn(Schedulers.newThread())
+            .subscribe(object : CompletableObserver {
+            override fun onComplete() {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onError(e: Throwable) {}
+        })
     }
 
     fun getRecipes(query: String): Observable<ResponseRecipeSearch> {

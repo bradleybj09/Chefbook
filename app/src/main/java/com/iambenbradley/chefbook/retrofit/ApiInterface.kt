@@ -14,7 +14,7 @@ interface ApiInterface {
         "Accept: Application/Json"
     )
     @GET("recipes/search")
-    fun searchRecipes(@Query("query") query: String, @Query("number") number: String = "6"): Observable<ResponseRecipeSearch>
+    fun searchRecipes(@Query("query") query: String, @Query("number") number: String = "1"): Observable<ResponseRecipeSearch>
 
     @Headers(
         "X-RapidAPI-Key: $API_KEY",
