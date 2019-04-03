@@ -2,7 +2,6 @@ package com.iambenbradley.chefbook.model.data
 
 import androidx.room.*
 import com.iambenbradley.chefbook.model.room.Recipe
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 

@@ -14,8 +14,16 @@ const val API_PATH = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.co
 const val IMAGE_ROOT_PATH = "https://spoonacular.com/recipeImages/"
 
 @BindingAdapter("app:imageUrl")
-fun loadImage(view: ImageView, fullImageUrl: String?) {
-    if(fullImageUrl != null) Picasso.get().load(fullImageUrl).into(view)
+fun loadImage2(view: ImageView, imageUrl: String?) {
+    if (imageUrl != null) {
+        if (imageUrl.substring(0, 5) == "https") {
+            Log.e("fullUrl",imageUrl)
+            Picasso.get().load(imageUrl).into(view)
+        } else {
+            Log.e("shortUrl", IMAGE_ROOT_PATH + imageUrl)
+            Picasso.get().load(IMAGE_ROOT_PATH + imageUrl).into(view)
+        }
+    }
 }
 
 fun convertRecipeListToSummaryList(input: List<Recipe>): List<RecipeSummary> {

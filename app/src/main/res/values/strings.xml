@@ -11,4 +11,5 @@
     <string name="cancel">Cancel</string>
     <string name="no_favorites">You have no favorite recipes. Try searching for something!</string>
     <string name="no_results">Your search returned no results. Try something else!</string>
+    <string name="results">Results for \u0020</string>
 </resources>
